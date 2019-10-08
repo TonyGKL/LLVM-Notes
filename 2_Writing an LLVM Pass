@@ -1,0 +1,17 @@
+1.什么是 Pass ？
+    LLVM Pass 框架是LLVM系统的重要组成部分，因为LLVM pass 是编译器大多数有趣部分所在的位置。
+    Pass执行构成编译器的转换和优化，它们构建这些转换使用的分析结果，并且最重要的是，它们是编译器代码的结构化技术。
+
+所有LLVM pass 都是Pass类的子类，它们通过重写从Pass继承的虚拟方法来实现功能。
+根据pass的工作方式，您应该从 ModulePass、CallGraphSCCPass、FunctionPass、LoopPass、RegionPass、BasicBlockPass类继承，
+这为系统提供了有关pass以及如何与其他 pass 结合使用的更多信息。 
+LLVM Pass框架的主要功能之一是，它根据您的pass所遇到的约束（由其派生的类指示）来安排pass以高效的方式运行。
+
+我们首先向您展示如何构造pass，从设置代码到编译，加载和执行过程，一应俱全。在基础知识掌握之后，将讨论更多高级功能。
+
+
+
+1.快速入门—编写 Hello world
+    在这里，我们描述了如何编写 pass的“ hello world”。
+    “Hello” pass旨在仅打印出正在编译的程序中存在的非外部函数的名称。
+    它根本不修改程序，只是对其进行检查。 此 pass 的源代码和文件在 lib/Transforms/Hello 目录的LLVM源树中可获得。
