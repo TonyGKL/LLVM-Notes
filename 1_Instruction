@@ -1,0 +1,71 @@
+什么是LLVM
+    LLVM项目是模块化、可重用的编译器以及工具链技术的集合。
+
+备注：有些文章把LLVM当做 Low Level Virtual Machine(低级虚拟机)的缩写简称。
+官方描述如下
+    The name "LLVM" itself is not an acronym; it is the full name of the project. 
+    “LLVM” 这个名称本身不是首字母缩略词; 它是项目的全名。
+
+什么是Clang
+    LLVM项目的一个子项目，基于LLVM架构的C/C++/Objective-C编译器前端。
+    
+比于GCC，Clang具有如下优点
+    编译速度快:在某些平台上，Clang的编译速度显著的快过GCC(Debug模式下编译OC速度比GGC快3倍)
+    占用内存小:Clang生成的AST所占用的内存是GCC的五分之一左右
+    模块化设计:Clang采用基于库的模块化设计，易于 IDE 集成及其他用途的重用
+    诊断信息可读性强:在编译过程中，Clang 创建并保留了大量详细的元数据 (metadata)，有利于调试和错误报告
+    设计清晰简单，容易理解，易于扩展增强
+    
+LLVM整体架构，前端用的是clang，广义的LLVM是指整个LLVM架构，一般狭义的LLVM指的是LLVM后端（包含代码优化和目标代码生成）。
+源代码（c/c++）经过clang--> 中间代码(经过一系列的优化，优化用的是Pass) --> 机器码
+
+
+
+
+
+如何构建？
+环境：Ubuntu 1804
+
+1.源码下载
+--------------------------------
+下载LLVM
+$ git clone https://git.llvm.org/git/llvm.git/
+
+下载clang
+$ cd llvm/tools
+$ git clone https://git.llvm.org/git/clang.git/
+
+备注：clang是llvm的子项目，但是它们的源码是分开的，我们需要将clang放在llvm/tools目录下。
+
+2.源码编译
+--------------------------------
+首先安装 cmake 和 ninja
+$ sudo apt install cmake
+$ sudo apt install ninja-build
+
+ninja如果安装失败，可以直接从github获取release版放入【/usr/local/bin】中
+https://github.com/ninja-build/ninja/releases
+
+在LLVM源码同级目录下新建一个【llvm_build】目录(最终会在【llvm_build】目录下生成【build.ninja】
+
+$ cd llvm_build
+$ cmake -G Ninja ../llvm -DCMAKE_INSTALL_PREFIX= LLVM的安装路径
+
+#######################################
+CMake错误: No CMAKE_CXX_COMPILER could be found.
+$ sudo apt-get update
+$ sudo apt-get install -y build-essential
+#######################################
+
+备注：生成build.ninja，就表示编译成功，-DCMAKE_INSTALL_PREFIX 表示编译好的东西放在指定的路径，-D表示参数。
+更多cmake相关选项，可以参考: https://llvm.org/docs/CMake.html
+
+编译
+$ ninja
+编译完毕后， 【llvm_build】目录大概 21.05 G（这个真的是好大啊）
+
+安装
+$ ninja install
+
+
+
