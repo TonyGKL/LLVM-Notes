@@ -43,13 +43,15 @@ $ git clone https://git.llvm.org/git/clang.git/
 $ sudo apt install cmake
 $ sudo apt install ninja-build
 
+$ sudo apt install build-essential
+
 ninja如果安装失败，可以直接从github获取release版放入【/usr/local/bin】中
 https://github.com/ninja-build/ninja/releases
 
 在LLVM源码同级目录下新建一个【llvm_build】目录(最终会在【llvm_build】目录下生成【build.ninja】
 
 $ cd llvm_build
-$ cmake -G Ninja ../llvm -DCMAKE_INSTALL_PREFIX= LLVM的安装路径
+$ cmake -G Ninja --enable-optimized --enable-targets=host-only ../llvm -DCMAKE_INSTALL_PREFIX= LLVM的安装路径
 
 #######################################
 CMake错误: No CMAKE_CXX_COMPILER could be found.
