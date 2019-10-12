@@ -52,6 +52,8 @@ https://github.com/ninja-build/ninja/releases
 
 $ cd llvm_build
 $ cmake -G Ninja --enable-optimized --enable-targets=host-only ../llvm -DCMAKE_INSTALL_PREFIX= LLVM的安装路径
+-DCMAKE_BUILD_TYPE=Release 使用release更快，默认Debug比较慢
+
 
 #######################################
 CMake错误: No CMAKE_CXX_COMPILER could be found.
@@ -64,10 +66,13 @@ $ sudo apt-get install -y build-essential
 
 编译
 $ ninja
+
+make -j4 启动多线程编译
 编译完毕后， 【llvm_build】目录大概 21.05 G（这个真的是好大啊）
 
 安装
 $ ninja install
+make install
 
 
 
